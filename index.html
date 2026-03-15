@@ -5,133 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi từ bạn gái Quân Ngố</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: #ffebee; /* Màu hồng nhạt */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
+        :root { --primary: #ffadad; --secondary: #ff85a1; --text: #4a4a4a; }
+        body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #ffeef2; font-family: 'Arial', sans-serif; overflow: hidden; }
+        
+        /* Hiệu ứng trái tim bay */
+        .heart { position: fixed; color: #ff85a1; font-size: 20px; animation: heartMove 4s linear forwards; z-index: -1; }
+        @keyframes heartMove { 0% { transform: translateY(100vh) rotate(0); opacity: 1; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        .card {
-            width: 90%;
-            max-width: 400px;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 2px solid #ff8fa3;
-            position: relative;
-        }
+        /* Phong bì */
+        .envelope-wrapper { cursor: pointer; transition: 0.5s; position: relative; }
+        .envelope { position: relative; width: 300px; height: 200px; background: var(--secondary); border-radius: 0 0 5px 5px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .envelope::before { content: ""; position: absolute; top: 0; z-index: 2; border-top: 130px solid var(--primary); border-left: 150px solid transparent; border-right: 150px solid transparent; transform-origin: top; transition: all 0.5s ease-in-out; }
+        .envelope::after { content: ""; position: absolute; z-index: 2; width: 0; height: 0; border-top: 100px solid transparent; border-right: 150px solid var(--secondary); border-bottom: 100px solid var(--secondary); border-left: 150px solid var(--secondary); border-radius: 0 0 5px 5px; }
+        
+        /* Tờ thư bên trong */
+        .letter { position: absolute; bottom: 0; left: 10px; width: 280px; height: 180px; background: white; padding: 20px; box-sizing: border-box; transition: all 0.5s ease-in-out; z-index: 1; overflow-y: auto; border-radius: 5px; }
+        .letter h2 { font-size: 16px; color: var(--secondary); margin-top: 0; }
+        .letter p { font-size: 13px; line-height: 1.6; color: var(--text); white-space: pre-line; }
 
-        .heart-icon {
-            font-size: 50px;
-            color: #ff4d6d;
-            margin-bottom: 10px;
-            animation: beat 1s infinite;
-        }
+        /* Hiệu ứng mở thư */
+        .envelope-wrapper.open .envelope::before { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter { bottom: 100px; height: 380px; width: 320px; left: -10px; z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        @keyframes beat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        h1 {
-            color: #ff4d6d;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-
-        .letter-content {
-            text-align: left;
-            line-height: 1.6;
-            color: #444;
-            font-size: 15px;
-            background: #fffafa;
-            padding: 15px;
-            border-radius: 10px;
-            max-height: 350px;
-            overflow-y: auto; /* Cho phép cuộn nếu thư dài */
-            border-left: 3px solid #ff8fa3;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #ff4d6d;
-            font-style: italic;
-        }
-
-        /* Thanh cuộn cute */
-        .letter-content::-webkit-scrollbar {
-            width: 5px;
-        }
-        .letter-content::-webkit-scrollbar-thumb {
-            background: #ff8fa3;
-            border-radius: 10px;
-        }
-
-        .floating-hearts {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
+        .instruction { position: absolute; bottom: -40px; width: 100%; text-align: center; color: var(--secondary); font-weight: bold; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
-    <div class="floating-hearts" id="hearts"></div>
+    <div class="envelope-wrapper" id="envelope">
+        <div class="envelope">
+            <div class="letter">
+                <h2>Gửi Anh Quân Ngố ❤️</h2>
+                <p>
+                    Hi, hello anh iu thúi, anh thấy em có giỏi ko, mấy cái này là em tự làm hết đó. 
+                    
+                    Em chỉ muốn khoe với cục cưng của em cái này, dạo này em học máy tính nên cũng có thêm tí kiến thức, hahaah em đùa đó, không có giảng viên dạy tạo web gửi thư tình cho bạn trai đâu ạ. Em cũng có vài điều muốn gửi tới anh mà em thấy gửi qua tin nhắn hay nói trực tiếp thì cũng hơi ngại quá hi hi.
 
-    <div class="card">
-        <div class="heart-icon">❤️</div>
-        <h1>Gửi Anh Quân Ngố của em</h1>
-        
-        <div class="letter-content">
-            hi lu anh iu thúi, anh thấy em có giỏi ko, mấy cái này là em tự làm hết đó. <br><br>
-            em chỉ muốn khoe với cục cưng của em về quả web này, dạo này em học máy tính nên cũng có thêm tí kiến thức, hahaah em đùa đó, không có giảng viên dạy tạo web gửi thư tình cho bạn trai đâu ạ. <br><br>
-            em cũng có vài điều muốn gửi tới anh nma gửi qua tin nhắn hay nói trực tiếp thì cũng hơi ngại quá hi hi <br><br>
-            có lẽ dạo này em hơi nhạy cảm với tất cả mọi chuyện xảy ra, và cũng nóng nảy hơn bình thường nữa, em đoán là anh thấy rất khó xử, k biết phải làm thế nào, nhiều lúc em giận quá mà k có thèm suy nghĩ gì hết, cho em xin lỗi anh vì đã làm anh buồn nhé. Đôi khi em chọn đóng lại mọi thứ vì em sợ bị người khác coi thường cảm xúc của em khi em mở lòng <br><br>
-            nma em nhận ra nếu làm vậy thì sẽ càng khó khăn cho anh và em, vì em nên nói cho anh biết rằng em đang nghĩ gì để chúng mình có thể giải quyết mọi chuyện, và vốn dĩ anh sẽ hong bao giờ coi nhẹ cảm xúc của em hi hi <br><br>
-            Và em cũng cảm ơn anh yêu nhiều lắm, vì anh đã luôn luôn kiên nhẫn với phong cách đưa ra nhiều quyết định quái đản của em, em yêu yêu anh nhiềuuu. Đợi anniversary 1 năm và nhìu năm của chúng ta <33
-        </div>
+                    Có lẽ dạo này em hơi nhạy cảm với tất cả mọi chuyện xảy ra, và cũng nóng nảy hơn bình thường nữa, em đoán là anh thấy rất khó xử, k biết phải làm thế nào, nhiều lúc em giận quá mà k có thèm suy nghĩ gì hết, cho em xin lỗi anh vì đã làm anh buồn nhé. Đôi khi em chọn đóng lại mọi thứ vì em sợ bị người khác coi thường cảm xúc của em khi em mở lòng, nhưng em nhận ra nếu làm vậy thì sẽ càng khó khăn cho anh và em, vì em nên nói cho anh biết rằng em đang nghĩ gì để chúng mình có thể giải quyết mọi chuyện, bởi vì vốn dĩ anh sẽ hong bao giờ coi nhẹ cảm xúc của em đâu hi hi.
 
-        <div class="footer">
-            Yêu anh nhiều lắm! 🌸
+                    Và em cũng cảm ơn anh yêu nhiều lắm, vì anh đã luôn luôn kiên nhẫn với phong cách đưa ra nhiều quyết định quái đản của em, em yêu yêu anh nhiềuuu. Nợ anh thật nhiều cái ôm, manifest chúng mình đi du lịch cùng nhauu nào!
+                </p>
+            </div>
         </div>
+        <div class="instruction">Nhấp vào đi ạk!</div>
     </div>
 
     <script>
-        // Tạo hiệu ứng trái tim bay ngẫu nhiên
+        // Mở thư khi click
+        const envelope = document.getElementById('envelope');
+        envelope.addEventListener('click', () => {
+            envelope.classList.toggle('open');
+        });
+
+        // Tạo trái tim bay
         function createHeart() {
             const heart = document.createElement('div');
+            heart.classList.add('heart');
             heart.innerHTML = '❤️';
-            heart.style.position = 'fixed';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.top = '100vh';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.color = '#ff8fa3';
-            heart.style.opacity = Math.random();
-            heart.style.transition = 'transform 5s linear, opacity 5s';
-            
-            document.getElementById('hearts').appendChild(heart);
-
-            setTimeout(() => {
-                heart.style.transform = `translateY(-110vh) rotate(${Math.random() * 360}deg)`;
-                heart.style.opacity = '0';
-            }, 100);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
         }
-
         setInterval(createHeart, 300);
     </script>
 </body>
